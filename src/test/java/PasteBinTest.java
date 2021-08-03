@@ -1,16 +1,19 @@
+import allure.AllureListener;
+import allure.BaseClass;
+import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.util.List;
 
-public class PasteBinTest {
-    WebDriver driver;
+@Listeners({AllureListener.class})
+public class PasteBinTest extends BaseClass {
+    public WebDriver driver;
 
     private static final String pasteHeader = "how to gain dominance among developers";
 
@@ -22,10 +25,12 @@ public class PasteBinTest {
 
     @BeforeMethod
     public void browserSetUp() {
-        driver = new ChromeDriver();
+        BaseClass baseClass = new BaseClass();
+        driver = baseClass.initializeDriver();
     }
 
-    @Test
+    @Test(description = "Not LoggedIn user can create new paste")
+    @Description("Create new paste with expiration time 10 mins, text name and code. Verify success note is shown")
     public void userCanCreateNewPaste() {
         CreatedPastePage createdPastePage = new HomePage(driver)
                 .openPage()
@@ -37,7 +42,8 @@ public class PasteBinTest {
         Assert.assertTrue(createdPastePage.isPastedSuccessfully());
     }
 
-    @Test
+    @Test(description = "Name of the paste is equal to created paste header")
+    @Description("Create new paste and verify that name used is equal to the header on created paste page")
     public void checkNewPasteHeaderIsCorrect() {
         CreatedPastePage createdPastePage = new HomePage(driver)
                 .openPage()
@@ -52,7 +58,8 @@ public class PasteBinTest {
         Assert.assertEquals(createdPastePage.getSavedPasteHeaderText(), pasteHeader);
     }
 
-    @Test
+    @Test(description = "New Paste code is shown correctly on created paste page")
+    @Description("Create new paste and verify that code entered is shown correctly on created paste page")
     public void checkNewPasteCodeIsDisplayed() {
         new HomePage(driver)
                 .openPage()
@@ -73,7 +80,8 @@ public class PasteBinTest {
         Assert.assertTrue(driver.findElement(By.xpath(codeLine3Xpath)).isDisplayed());
     }
 
-    @Test
+    @Test(description = "Elements are styled correctly with Bash Syntax Highlighting")
+    @Description("Create new paste and verify that text elements are styled like Bash syntax on created paste page")
     public void checkBashHighlightedSyntax() {
         CreatedPastePage createdPastePage = new HomePage(driver)
                 .openPage()
@@ -128,5 +136,8 @@ public class PasteBinTest {
     @AfterMethod
     public void browserTearDown() {
         driver.quit();
+        if (tdriver.get() != null) {
+            tdriver.remove();
+        }
     }
 }

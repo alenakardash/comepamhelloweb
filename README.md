@@ -18,12 +18,14 @@ Selenium 3.141.59
 
 Maven 3.0.0
 
+Allure 2.14
+
 1. Download and set up JAVA:
 
 - Navigate to 
 https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
 
-Select the appropriate JDK version and click Download.
+- Select the appropriate JDK version and click Download.
 
 - Set up JAVA_HOME system environment
 
@@ -41,8 +43,8 @@ Execute the following Terminal commands:
 
 ##### for Windows:
 
-Right click My Computer and select Properties.
-On the Advanced tab, select Environment Variables, and then edit JAVA_HOME to point to where the JDK software is located, for example, 
+- Right click My Computer and select Properties.
+- On the Advanced tab, select Environment Variables, and then edit JAVA_HOME to point to where the JDK software is located, for example, 
 
 C:\Program Files\Java\jdk1.8.0_02
 
@@ -54,7 +56,7 @@ C:\Program Files\Java\jdk1.8.0_02/bin
 
 https://chromedriver.chromium.org/downloads
 
-Set up environment variable for chromedriver
+- Set up environment variable for chromedriver
 
 ##### for MacOS:
 
@@ -76,9 +78,10 @@ Set up environment variable for chromedriver
 5. Download and set up Maven
 
 - Navigate to https://maven.apache.org/download.cgi
-Download the binary and unpack it.
-
+- Download the binary and unpack it.
 - Add MAVEN_HOME to system variables
+
+##### for MacOS:
 
 `nano ~/.bash_profile`
 
@@ -92,6 +95,23 @@ Download the binary and unpack it.
 - Right click My Computer and select Properties.
 - On the Advanced tab, select Environment Variables, and then edit MAVEN_HOME to point to where the maven is located.
 - Add {maven home}/bin to the Path
+
+5. Download Allure framework
+
+##### for MacOS:
+
+`brew install allure`
+
+##### for Windows:
+
+To install Allure, download and install Scoop and then execute in the Powershell:
+
+`scoop install allure`
  
-5. Navigate to comepamhelloweb directory and run:
-`mvn test`
+6. Navigate to comepamhelloweb directory and run:
+
+`mvn clean test`
+
+7. To generate an Allure report run:
+
+`allure serve /home/path/to/project/allure-results/`
